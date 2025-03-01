@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой сайт</title>
+    <script>
+        async function fetchUsers() {
+            try {
+                const response = await fetch('http://localhost:5000/get_users'); // Ваш API URL
+                const users = await response.json();
+
+                // Выводим данные пользователей
+                const usersList = document.getElementById('users-list');
+                users.forEach(user => {
+                    const userItem = document.createElement('div');
+                    userItem.innerHTML = `<strong>${user.username}</strong> (${user.full_name}) <img src="${user.avatar_url}" alt="Avatar" />`;
+                    usersList.appendChild(userItem);
+                });
+            } catch (error) {
+                console.error('Ошибка при получении данных:', error);
+            }
+        }
+
+        window.onload = fetchUsers;
+    </script>
+</head>
+<body>
+    <h1>Список пользователей</h1>
+    <div id="users-list"></div>
+</body>
+</html>
